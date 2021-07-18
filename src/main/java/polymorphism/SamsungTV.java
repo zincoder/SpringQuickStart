@@ -13,13 +13,12 @@ public class SamsungTV implements TV{
 	public SamsungTV() {
 		System.out.println("===> SamsungTV 按眉 积己");
 	}
-	public SamsungTV(Speaker speaker) {
-		System.out.println("===> SamsungTV(2) 按眉 积己");
+	public void setSpeaker(Speaker speaker) {
+		System.out.println("===> setSpeaker() 龋免");
 		this.speaker = speaker;
 	}
-	public SamsungTV(Speaker speaker, int price) {
-		System.out.println("===> SamsungTV(3) 按眉 积己");
-		this.speaker = speaker;
+	public void setPrice(int price) {
+		System.out.println("===> setPrice() 龋免");
 		this.price = price;
 	}
 	public void powerOn() {
