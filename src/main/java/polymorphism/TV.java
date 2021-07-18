@@ -1,4 +1,4 @@
-package polymorphism3;
+package polymorphism;
 
 public interface TV {
 	public void powerOn();
