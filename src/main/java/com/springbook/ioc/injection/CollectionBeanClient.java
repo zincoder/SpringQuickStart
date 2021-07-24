@@ -6,12 +6,17 @@ import java.util.Properties;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
+import polymorphism.TV;
+
 public class CollectionBeanClient {
 
 	public static void main(String[] args) {
 		AbstractApplicationContext factory = new GenericXmlApplicationContext("applicationContext.xml");
+		TV lgTV = (TV)factory.getBean("tv");
+		lgTV.volumeUp();
+		lgTV.volumeDown();
 		
-		CollectionBean bean = (CollectionBean)factory.getBean("collectionBean");
+//		CollectionBean bean = (CollectionBean)factory.getBean("collectionBean");
 //		List<String> addressList = bean.getAddressList();
 //		for(String address : addressList) {
 //			System.out.println(address.toString());
@@ -25,10 +30,10 @@ public class CollectionBeanClient {
 //		Map<String, String> addressMap = bean.getAddressMap();
 //		System.out.println(addressMap.get("고길동"));
 		
-		Properties addrressProperty = bean.getAddressProperty();
-		System.out.println(addrressProperty.get("마이콜"));
-		
-		factory.close();
+//		Properties addrressProperty = bean.getAddressProperty();
+//		System.out.println(addrressProperty.get("마이콜"));
+//		
+//		factory.close();
 
 	}
 
