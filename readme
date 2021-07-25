@@ -6,7 +6,7 @@ create user springQuickStart identified by springQuickStart;
 grant connect,resource,dba to springQuickStart;
 grant create table, create view to springQuickStart ;
 
-#create table
+#create board table
 create table board(
     seq number(5) primary key,
     title varchar2(200),
@@ -14,5 +14,14 @@ create table board(
     content varchar2(2000),
     regdate date default sysdate,
     cnt number(5) default 0
+);
+
+#create USERS table
+
+CREATE TABLE USERS(
+    ID VARCHAR2(8) PRIMARY KEY,
+    PASSWORD VARCHAR2(8),
+    NAME VARCHAR2(20),
+    ROLE VARCHAR2(5)
 );
 commit;
