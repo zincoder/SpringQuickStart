@@ -1,0 +1,18 @@
+
+#db setting
+
+#create user
+create user springQuickStart identified by springQuickStart;
+grant connect,resource,dba to springQuickStart;
+grant create table, create view to springQuickStart ;
+
+#create table
+create table board(
+    seq number(5) primary key,
+    title varchar2(200),
+    writer varchar2(200),
+    content varchar2(2000),
+    regdate date default sysdate,
+    cnt number(5) default 0
+);
+commit;
