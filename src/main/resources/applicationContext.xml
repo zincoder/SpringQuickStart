@@ -10,13 +10,15 @@
 
 	<context:component-scan base-package="com.springbook.biz"></context:component-scan>
 	
-	<bean id="log" class="com.springbook.biz.common.LogAdvice"></bean>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- <bean id="log" class="com.springbook.biz.common.LogAdvice"></bean>
 	<aop:config>
 		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
 		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
 		<aop:aspect ref="log">
 			<aop:after pointcut-ref="getPointcut" method="printLog"/>
-			<!-- <aop:before pointcut-ref="allPointcut" method="printLog"/> -->
+			<aop:before pointcut-ref="allPointcut" method="printLog"/>
 		</aop:aspect>
 	</aop:config>
 	
@@ -55,5 +57,5 @@
 		<aop:aspect ref="around">
 			<aop:around pointcut-ref="allPointcut" method="aroundLog" />
 		</aop:aspect>
-	</aop:config>
+	</aop:config> -->
 </beans>
