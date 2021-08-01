@@ -4,9 +4,15 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 	<context:component-scan base-package="com.springbook.biz"></context:component-scan>
 	
@@ -26,54 +32,34 @@
 	<!-- Spring JDBC 설정 -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
+	</bean> 
+	
+	<!-- Transaction 설정 -->
+  <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	
-	<!-- <bean id="log" class="com.springbook.biz.common.LogAdvice"></bean>
 	<aop:config>
-		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
-		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
-		<aop:aspect ref="log">
-			<aop:after pointcut-ref="getPointcut" method="printLog"/>
-			<aop:before pointcut-ref="allPointcut" method="printLog"/>
-		</aop:aspect>
-	</aop:config>
+		<aop:pointcut id="txPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
+		<!--
+			exception in thread "main" org.springframework.beans.factory.beancreationexception: error creating bean with name 'boarddaospring' defined in file [c:\users\pmh49\documents\workspace-spring-tool-suite-4-4.11.0.release\boardweb\target\classes\com\springbook\biz\board\impl\boarddaospring.class] 
+		아래와 같이 작성해서 계속 위와 같은 에러발생
+		expression="execution(* com.springbook.biz..*(..))" 
+		* : 리턴타입
+		com.springbook.biz.. :'com.springbook.biz'를 포함한 전체 패키지 검색
+		*Impl : 클래스명(나의 경우 클래스명 작성을 안함->에러발생)
+		*(..) :메소드명/매개변수
+		<aop:pointcut id="txPointcut" expression="execution(* com.springbook.biz..*(..))"/> -->
+		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>	
+	</aop:config> 
 	
-	<bean id="before" class="com.springbook.biz.common.BeforeAdvice"></bean>
-	<aop:config>
-		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
-		<aop:aspect ref="before">
-			<aop:before pointcut-ref="allPointcut" method="beforeLog"/>
-		</aop:aspect>
-	</aop:config>
-	
-	<bean id="afterReturning" class="com.springbook.biz.common.AfterReturningAdvice"></bean>
-	<aop:config>
-		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
-		<aop:aspect ref="afterReturning">
-			<aop:after-returning pointcut-ref="getPointcut" method="afterLog" returning="returnObj"/>
-		</aop:aspect>
-	</aop:config>
-	
-	<bean id="afterThrowing" class="com.springbook.biz.common.AfterThrowingAdvice"></bean>
-	<bean id="after" class="com.springbook.biz.common.AfterAdvice"></bean>
-	<aop:config>
-		<aop:pointcut id="allPoinycut" expression="execution(* com.springbook.biz..*Impl.*(..))" />
-		<aop:aspect ref="afterThrowing">
-			<aop:after-throwing pointcut-ref="allPointcut" method="exceptionLog" throwing="exceptObj"/>
-  		</aop:aspect>
-  		
-  		<aop:aspect ref="after">
-  			<aop:after pointcut-ref="allPointcut" method="finallyLog"/>
-  		</aop:aspect>
-	</aop:config>
-	
-	<bean id="around" class="com.springbook.biz.common.AroundAdvice" />
-	<aop:config>
-		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
-		<aop:aspect ref="around">
-			<aop:around pointcut-ref="allPointcut" method="aroundLog" />
-		</aop:aspect>
-	</aop:config> -->
+	 <tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice> 
+	<!-- <aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/> -->
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy> 
 </beans>
