@@ -23,6 +23,11 @@
 		<property name="password" value="springQuickStart"/>  -->
 	</bean>
 	
+	<!-- Spring JDBC 설정 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
 	<!-- <bean id="log" class="com.springbook.biz.common.LogAdvice"></bean>
