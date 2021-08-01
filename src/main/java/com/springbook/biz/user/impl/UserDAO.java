@@ -21,7 +21,7 @@ public class UserDAO {
 	private final String USER_GET = "select * from users where id=? and password=?";
 	
 	//CRUD 기능의 메소드 구현
-	//회원 등록
+	//회원 조회
 	public UserVO getUser(UserVO vo) {
 		UserVO user = null;
 		try {
