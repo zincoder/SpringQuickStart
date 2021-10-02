@@ -8,7 +8,7 @@
   		<param-value>EUC-KR</param-value>
   	</init-param>
   </filter>
-  <filter-mapping>
+  <filter-mapping> 
   	<filter-name>characterEncoding</filter-name>
   	<url-pattern>*.do</url-pattern>
   </filter-mapping>
